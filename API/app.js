@@ -1,28 +1,61 @@
 const express = require("express");
-
+var path = require('path');
 const app = express();
 require('dotenv/config');
 
 const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
-const Task = require('./models/Task');
+
 const Restaurant = require('./models/Restaurant');
 const Review = require('./models/Review');
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+// var urlencodedParser = bodyParser.urlencoded({ extended: false})
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', function(req, res, next) {
+
+  Restaurant.find()
+  .then(data=>{
+      res.render('index', {page:'Restaurants', menuId:'home', restaurants:data});
+  }).catch(err=>{
+      res.json(err)
+  })
+
+
+});
+app.get('/about', function(req, res, next) {
+  res.render('index', {page:'Menu', menuId:'about'});
+});
+app.get('/contact', function(req, res, next) {
+  res.render('index', {page:'Menu', menuId:'contact'});
+});
+
 
 app.post('/addRestaurant',(req,res)=>{
     console.log("New Restaurant added")
+    console.log(req.headers.host);
+
     const restaurant = new Restaurant({
-        
+
         name: req.body.name,
         location:req.body.location,
         cuisine:req.body.cuisine
     });
     restaurant.save()
     .then(data => {
+      if(req.headers.host === "localhost:3000"){
+
+        res.redirect('/');
+
+      }else{
         res.json(data);
+      }
+
     })
     .catch(err => {
         res.json({message:err})
@@ -84,8 +117,8 @@ app.post('/addReview',(req,res)=>{
    if(req.body.rating > 5 || req.body.rating < 0){
 
         res.json({message:'Invalid Rating'})
-    
-        
+
+
    }
 
     const review = {
@@ -100,7 +133,7 @@ app.post('/addReview',(req,res)=>{
         res.json({message:err})
     })
 
- 
+
 });
 
 app.put('/editReview',(req,res)=>{
@@ -113,7 +146,7 @@ app.get('/getRestaurantRating',(req,res)=>{
     let restaurant
     Restaurant.find({_id:req.body.id})
     .then(data =>{
-        
+
         let total = 0;
         restaurant = data[0]
         let reviews = restaurant.reviews;
@@ -123,7 +156,7 @@ app.get('/getRestaurantRating',(req,res)=>{
         }
         )
 
-        
+
 
         var rating = {
             rating: total/reviews.length
@@ -140,12 +173,12 @@ app.delete('/deleteReview',(req,res)=>{
     let reviewId = req.body.review_id;
     let userId = req.body.user_id;
 
-    
+
 
     var review = {
         _id:reviewId,
-       
-        
+
+
     }
 
     Restaurant.findOneAndUpdate({_id:restaurantId},{$pull:{reviews:review}},{new:true})
@@ -157,7 +190,7 @@ app.delete('/deleteReview',(req,res)=>{
     })
 
 
-   
+
 })
 
 
@@ -175,4 +208,4 @@ mongoose.connect(process.env.DB_CONNECTION, {useUnifiedTopology: true, useNewUrl
 // mongoose.connect(process.env.DB_CONNECTION,{ useUnifiedTopology: true, useNewUrlParser: true},()=>{
 //     console.log('Db Connected.')
 // })
-app.listen(3000); 
+app.listen(3000);
