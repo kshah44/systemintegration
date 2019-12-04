@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <% include partials/head %>
+</head>
+<body>
+<% include partials/menu %>
+<div class="container-fluid bg-3 text-center">
+  <h3><%= page %></h3><br>
+ 
+  <div class="row">
+    <table id="restaurants" class="table table-hover text-centered">
+
+
+    <thead>
+     <tr>
+       <th scope="col">#</th>
+       <th scope="col">Name </th>
+       <th scope="col">Location</th>
+       <th scope="col"> Cuisine </th>
+       <th scope="col">Reviews</th>
+       
+       
+
+     </tr>
+   </thead>
+   <tbody>
+      <% 
+      var counter = 0
+      restaurants.forEach(restaurant=>{
+        counter = counter +1;
+        %>
+        <tr>
+          <th scope="row"><%= counter %></th>
+          <td><a href="/editRestaurant/<%= restaurant._id %>" ><%= restaurant.name %></a></td>
+          <td><%= restaurant.location %></td>
+          <td><%= restaurant.cuisine %></td>
+          <td><%= restaurant.reviews.length %></td>
+        
+          
+          <td><a   href="/delete/<%= restaurant._id %>"><input type="button" value="Delete" class="btn btn-danger"></a></td>
+ 
+        </tr>
+ 
+ 
+       <%})%>
+
+
+   </tbody>
+
+
+    </table>
+
+  </div>
+  <div class="row">
+    <div class="center_div">
+      <button class="btn btn-secondary" value="" onclick="toggleForm()">+ Add Restaurant</button>
+      
+      <form id="add_restaurant" style=" display: none" method="post" action="/addRestaurant">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Restaurant Name</label>
+        <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name" placeholder="Name Here">
+        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Location</label>
+        <input type="text" class="form-control" id="location" name="location" aria-describedby="emailHelp" placeholder="Location">
+        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Cuisine</label>
+        <input type="text" class="form-control" id="cuisine" name="cuisine" placeholder="cuisine">
+      </div>
+
+      
+      
+      <input type="submit" class="btn btn-primary" />
+    </form>
+    </div>
+  </div>
+
+</div>
+</body>
+<% include partials/script %>
+</html>

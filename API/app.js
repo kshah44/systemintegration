@@ -1,6 +1,7 @@
 const express = require("express");
 var path = require('path');
 const app = express();
+var cors = require('cors')
 require('dotenv/config');
 
 const bodyParser = require('body-parser');
@@ -10,6 +11,7 @@ const mongoose = require('mongoose');
 const Restaurant = require('./models/Restaurant');
 const Review = require('./models/Review');
 
+app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // var urlencodedParser = bodyParser.urlencoded({ extended: false})
@@ -35,8 +37,24 @@ app.get('/contact', function(req, res, next) {
   res.render('index', {page:'Menu', menuId:'contact'});
 });
 
+app.get('/restaurant/:id',(req,res,next)=>{
+    var id = req.params.id;
+    // console.log(id);
+    Restaurant.findById(id)
+    .then(restaurant=>{
+        console.log(restaurant);
+        
+        res.json(restaurant);
+    })
+    .catch(err=>{
+        res.json(err);
+    })
 
-app.post('/addRestaurant',(req,res)=>{
+    
+    
+});
+
+app.post('/restaurant',(req,res)=>{
     console.log("New Restaurant added")
     console.log(req.headers.host);
 
@@ -48,13 +66,9 @@ app.post('/addRestaurant',(req,res)=>{
     });
     restaurant.save()
     .then(data => {
-      if(req.headers.host === "localhost:3000"){
-
-        res.redirect('/');
-
-      }else{
+     
         res.json(data);
-      }
+      
 
     })
     .catch(err => {
@@ -62,7 +76,7 @@ app.post('/addRestaurant',(req,res)=>{
     })
 });
 
-app.put('/editRestaurantDetails',(req,res)=>{
+app.put('/restaurant',(req,res)=>{
     var id = req.body.id;
     var addedBy = req.body.added_by
     var location = req.body.location
@@ -85,7 +99,7 @@ app.put('/editRestaurantDetails',(req,res)=>{
 
 });
 
-app.get('/getRestaurants',(req,res)=>{
+app.get('/restaurant',(req,res)=>{
     Restaurant.find()
     .then(data=>{
         res.json(data)
@@ -94,12 +108,14 @@ app.get('/getRestaurants',(req,res)=>{
     })
 })
 
-app.delete('/deleteRestaurant',(req,res)=>{
+app.delete('/restaurant',(req,res)=>{
     let restaurantId = req.body.restaurant_id;
     let userId = req.body.user_id;
 
     Restaurant.findById(restaurantId)
     .then(restaurant=>{
+        console.log(restaurant);
+        
         if(restaurant.addedBy === userId){
             Restaurant.deleteOne({_id:restaurantId})
             .then(data=>{
@@ -208,4 +224,4 @@ mongoose.connect(process.env.DB_CONNECTION, {useUnifiedTopology: true, useNewUrl
 // mongoose.connect(process.env.DB_CONNECTION,{ useUnifiedTopology: true, useNewUrlParser: true},()=>{
 //     console.log('Db Connected.')
 // })
-app.listen(3000);
+app.listen(3030);
