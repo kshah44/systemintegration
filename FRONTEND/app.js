@@ -49,7 +49,7 @@ app.get('/', function(req, res, next) {
 
     axios.post("http://localhost:3030/restaurant",restaurant)
     .then(response =>{
-        console.log(response);
+        // console.log(response);
         
         res.redirect('/');
     })
@@ -82,7 +82,7 @@ app.get('/', function(req, res, next) {
   app.get('/editRestaurant/:id',(req,res,next)=>{
     axios.get("http://localhost:3030/restaurant/"+req.params.id)
     .then(restaurant=>{
-        console.log(restaurant.data);
+        // console.log(restaurant.data);
 
         res.render('edit_restaurant',{page:'Edit Restaurant Details', menuId:'home',restaurant:restaurant.data})
         
@@ -101,12 +101,12 @@ app.get('/', function(req, res, next) {
         location:req.body.location,
         cuisine:req.body.cuisine
     };
-    console.log(restaurant);
+    // console.log(restaurant);
     
 
     axios.put("http://localhost:3030/restaurant",restaurant)
     .then(response =>{
-        console.log(response);
+        // console.log(response);
         
         res.redirect('/')
     })
