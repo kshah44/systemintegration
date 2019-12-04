@@ -42,7 +42,7 @@ app.get('/restaurant/:id',(req,res,next)=>{
     // console.log(id);
     Restaurant.findById(id)
     .then(restaurant=>{
-        console.log(restaurant);
+        // console.log(restaurant);
         
         res.json(restaurant);
     })
@@ -114,7 +114,7 @@ app.delete('/restaurant',(req,res)=>{
 
     Restaurant.findById(restaurantId)
     .then(restaurant=>{
-        console.log(restaurant);
+        // console.log(restaurant);
         
         if(restaurant.addedBy === userId){
             Restaurant.deleteOne({_id:restaurantId})
