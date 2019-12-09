@@ -30,12 +30,7 @@ app.get('/', function(req, res, next) {
 
 
 });
-app.get('/about', function(req, res, next) {
-  res.render('index', {page:'Menu', menuId:'about'});
-});
-app.get('/contact', function(req, res, next) {
-  res.render('index', {page:'Menu', menuId:'contact'});
-});
+ 
 
 app.get('/restaurant/:id',(req,res,next)=>{
     var id = req.params.id;
@@ -47,7 +42,7 @@ app.get('/restaurant/:id',(req,res,next)=>{
         res.json(restaurant);
     })
     .catch(err=>{
-        res.json(err);
+        res.status(500).json(err);
     })
 
     
@@ -55,8 +50,8 @@ app.get('/restaurant/:id',(req,res,next)=>{
 });
 
 app.post('/restaurant',(req,res)=>{
-    console.log("New Restaurant added")
-    console.log(req.headers.host);
+    // console.log("New Restaurant added")
+    // console.log(req.headers.host);
 
     const restaurant = new Restaurant({
 
@@ -72,7 +67,7 @@ app.post('/restaurant',(req,res)=>{
 
     })
     .catch(err => {
-        res.json({message:err})
+        res.status(500).json({message:err})
     })
 });
 
@@ -94,7 +89,7 @@ app.put('/restaurant',(req,res)=>{
         }
     })
     .catch(err => {
-        console.log(err)
+        res.status(500).json({message:err})
     })
 
 });
@@ -104,7 +99,7 @@ app.get('/restaurant',(req,res)=>{
     .then(data=>{
         res.json(data)
     }).catch(err=>{
-        res.json(err)
+        resres.status(500).json(err)
     })
 })
 
@@ -122,7 +117,7 @@ app.delete('/restaurant',(req,res)=>{
                 res.json(data)
             })
             .catch(err=>{
-                res.json(err);
+                res.status(500).json(err);
             })
         }
     })
