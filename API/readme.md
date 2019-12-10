@@ -17,7 +17,7 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
 
     - **Success Response**:
         ***Status code***: `200`
-        Array[2][
+        ```Array[2][
             {
                 "addedBy": "shahkush18",
                 "_id": "5dd345f0a3e0bb46140f8e70",
@@ -55,7 +55,7 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
                 "__v": 0
             }
 
-        ]
+        ]```
     - **Error Response**: 
         ***Status code***: `500`
 
@@ -67,7 +67,7 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
     - **URL Parameters**: *None* 
 
     - **Data Parameters** : 
-        {
+        ```{
             addedBy:{
                 type:String,
                 default:"shahkush18"
@@ -85,12 +85,12 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
             cuisine:{
                 type:String,
                 required:true
-        }
+        }```
 
 
     - **Success Response**:
         ***Status code***: `200`
-            {
+            ```{
                 "addedBy": "shahkush18",
                 "_id": "5dee9a3bae4ec028c2ed25f2",
                 "name": "Trial 456",
@@ -98,7 +98,7 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
                 "cuisine": "Asian",
                 "reviews": [],
                 "__v": 0
-            }
+            }```
     - **Error Response**: 
         ***Status code***: `500`
 
@@ -114,7 +114,7 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
 
     - **Success Response**:
         ***Status code***: `200`
-            {
+            ```{
                 "addedBy": "shahkush18",
                 "_id": "5dee9a3bae4ec028c2ed25f2",
                 "name": "Trial 456",
@@ -122,7 +122,7 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
                 "cuisine": "Asian",
                 "reviews": [],
                 "__v": 0
-            }
+            }```
     - **Error Response**: 
         ***Status code***: `500`
 
@@ -135,7 +135,7 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
     - **URL Parameters**: *None* 
 
     - **Data Parameters** :
-             {
+            ```{
                 restaurant_id: {
                     type: string,
                     required: true
@@ -145,20 +145,12 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
                     required:true,
                     default:"shahkush18"
                 }
-            }
+            }```
 
 
     - **Success Response**:
         ***Status code***: `200`
-            {
-                "addedBy": "shahkush18",
-                "_id": "5dee9a3bae4ec028c2ed25f2",
-                "name": "Trial 456",
-                "location": "Charlotte",
-                "cuisine": "Asian",
-                "reviews": [],
-                "__v": 0
-            }
+            
     - **Error Response**: 
         ***Status code***: `500`
 
@@ -169,24 +161,32 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
     - **METHOD** : `PUT`
 
     - **URL Parameters**: *None* 
-    
+
     - **Data Parameters** :
-             {
-                restaurant_id: {
-                    type: string,
-                    required: true
-                },
-                user_id:{
-                    type: string,
-                    required:true,
-                    default:"shahkush18"
-                }
-            }
+            ```{
+            addedBy:{
+                type:String,
+                default:"shahkush18"
+            } ,
+            name:{
+                type:String,
+                required: true
+            
+            },
+
+            location:{
+                type:String,
+                required: true
+            },
+            cuisine:{
+                type:String,
+                required:true
+            }```
 
 
     - **Success Response**:
         ***Status code***: `200`
-            {
+            ```{
                 "addedBy": "shahkush18",
                 "_id": "5dee9a3bae4ec028c2ed25f2",
                 "name": "Trial 456",
@@ -194,7 +194,7 @@ This is a Rest API for  adding and getting list of your favourite restaurants. I
                 "cuisine": "Asian",
                 "reviews": [],
                 "__v": 0
-            }
+            }```
     - **Error Response**: 
         ***Status code***: `500`
     
